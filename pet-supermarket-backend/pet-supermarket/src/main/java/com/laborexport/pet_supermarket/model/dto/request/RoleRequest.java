@@ -8,5 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RoleRequest {
-    private String roleName;
+    private Long roleId;
 }
