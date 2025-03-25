@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -76,8 +77,8 @@ public class ProductController {
     }
 
     @Operation(summary = "upload product image ")
-    @PostMapping("/{productId}/image")
-    public ResponseEntity<ApiResponse> uploadProductImage(@PathVariable("productId") Long id, @RequestPart("image")MultipartFile image) throws IOException {
+    @PostMapping(path = "/{productId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse> uploadProductImage(@PathVariable("productId") Long id, @RequestPart("image") MultipartFile image) throws IOException {
         ImageRequest request = ImageRequest.builder().image(image).build();
         ApiResponse response = ApiResponse.succeed(productService.addProductImageByProductId(id, request));
         return new ResponseEntity<>(response, HttpStatus.OK);

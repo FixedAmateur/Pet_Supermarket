@@ -36,9 +36,8 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Order order;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Set<Order> orders;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name = "img_id")

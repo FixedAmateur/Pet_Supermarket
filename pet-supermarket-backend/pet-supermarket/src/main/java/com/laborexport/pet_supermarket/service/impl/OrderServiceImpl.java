@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,6 +53,7 @@ public class OrderServiceImpl implements OrderService {
         );
         Order newCart = new Order();
         newCart.setUser(user);
+        newCart.setOrderUpdated(LocalDateTime.now());
         orderRepository.save(newCart);
         return mapper.map(cart, OrderResponse.class);
     }
