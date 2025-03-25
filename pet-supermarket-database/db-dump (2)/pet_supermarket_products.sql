@@ -16,26 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `manufacturers`
+-- Table structure for table `products`
 --
 
-DROP TABLE IF EXISTS `manufacturers`;
+DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `manufacturers` (
-  `manufacturer_id` bigint NOT NULL AUTO_INCREMENT,
-  `manufacturer_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`manufacturer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `products` (
+  `product_id` bigint NOT NULL AUTO_INCREMENT,
+  `product_desc` varchar(255) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `product_type` varchar(255) DEFAULT NULL,
+  `unit_price` double DEFAULT NULL,
+  `manufacturer_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`product_id`),
+  UNIQUE KEY `UKnsskl85cgv135wkg0354xf09k` (`manufacturer_id`),
+  CONSTRAINT `FKljnead8q1652k9q5p0fe0o1g2` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturers` (`manufacturer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `manufacturers`
+-- Dumping data for table `products`
 --
 
-LOCK TABLES `manufacturers` WRITE;
-/*!40000 ALTER TABLE `manufacturers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `manufacturers` ENABLE KEYS */;
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (1,'string','string','string',10.25,NULL);
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:19

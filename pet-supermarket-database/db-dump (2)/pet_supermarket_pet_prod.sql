@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `roles`
+-- Table structure for table `pet_prod`
 --
 
-DROP TABLE IF EXISTS `roles`;
+DROP TABLE IF EXISTS `pet_prod`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `roles` (
-  `role_id` bigint NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE KEY `UK716hgxp60ym1lifrdgp67xt5k` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `pet_prod` (
+  `product_id` bigint NOT NULL,
+  `pet_id` bigint NOT NULL,
+  PRIMARY KEY (`product_id`,`pet_id`),
+  KEY `FK9nrqaduevgew43n5gkryfabst` (`pet_id`),
+  CONSTRAINT `FK9nrqaduevgew43n5gkryfabst` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`),
+  CONSTRAINT `FKivg1hwn9ol8uthn6gcu1k1xpn` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `roles`
+-- Dumping data for table `pet_prod`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (2,'ROLE_ADMIN'),(1,'ROLE_CUSTOMER');
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+LOCK TABLES `pet_prod` WRITE;
+/*!40000 ALTER TABLE `pet_prod` DISABLE KEYS */;
+INSERT INTO `pet_prod` VALUES (1,1);
+/*!40000 ALTER TABLE `pet_prod` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:19

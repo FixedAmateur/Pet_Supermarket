@@ -35,10 +35,10 @@ CREATE TABLE `images` (
   UNIQUE KEY `UKjvinkc7xcd0x0pk49c1me6hb6` (`product_id`),
   UNIQUE KEY `UKgn0kkmw9cx9tbd2bwc6xxbqr7` (`user_id`),
   CONSTRAINT `FK13ljqfrfwbyvnsdhihwta8cpr` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `FK9oxj9ikphheulub0gyr85p1v6` FOREIGN KEY (`pet_id`) REFERENCES `pet_prod` (`pet_id`),
+  CONSTRAINT `FK98byvs8ghuojf31pv1ajiihmo` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`pet_id`),
   CONSTRAINT `FKghwsjbjo7mg3iufxruvq6iu3q` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
   CONSTRAINT `FKku8o00dhcb2b156anh1x26csc` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`discount_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +47,7 @@ CREATE TABLE `images` (
 
 LOCK TABLES `images` WRITE;
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` VALUES (1,'https://i.pinimg.com/564x/e7/63/ee/e763ee1268743e92ec3a23c7f0d1eb0e.jpg',NULL,NULL,NULL,NULL),(2,'https://img-cdn.xemgame.com/2023/07/11/mai-sakurajima-rascal-does-not-dream-of-bunny-girl-senpai.gif',NULL,NULL,NULL,NULL),(3,'https://scitecvietnam.vn/wp-content/uploads/2022/11/scitec-nutrition-whey-professional-chocolate-hazelnut-2350-gram.jpg',NULL,NULL,NULL,NULL),(4,'http://res.cloudinary.com/fixedamateur/image/upload/767a55a1-be21-4f1f-ab3e-3483911b522b-Ghostblade-P.2_-4-scaled',NULL,NULL,NULL,NULL);
+INSERT INTO `images` VALUES (1,'https://i.pinimg.com/564x/e7/63/ee/e763ee1268743e92ec3a23c7f0d1eb0e.jpg',NULL,NULL,NULL,NULL),(2,'https://img-cdn.xemgame.com/2023/07/11/mai-sakurajima-rascal-does-not-dream-of-bunny-girl-senpai.gif',NULL,NULL,NULL,NULL),(3,'https://scitecvietnam.vn/wp-content/uploads/2022/11/scitec-nutrition-whey-professional-chocolate-hazelnut-2350-gram.jpg',NULL,NULL,NULL,NULL),(4,'https://scitecvietnam.vn/wp-content/uploads/2022/11/scitec-nutrition-whey-professional-chocolate-hazelnut-2350-gram.jpg',NULL,NULL,NULL,NULL),(5,'https://img-cdn.xemgame.com/2023/07/11/mai-sakurajima-rascal-does-not-dream-of-bunny-girl-senpai.gif',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:24
+-- Dump completed on 2025-03-25 21:58:19

@@ -16,33 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `discounts`
+-- Table structure for table `manufacturers`
 --
 
-DROP TABLE IF EXISTS `discounts`;
+DROP TABLE IF EXISTS `manufacturers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `discounts` (
-  `discount_id` bigint NOT NULL AUTO_INCREMENT,
-  `discount_desc` varchar(255) DEFAULT NULL,
-  `discount_expiry` datetime(6) DEFAULT NULL,
-  `discount_minus` double DEFAULT NULL,
-  `discount_percentage` bigint DEFAULT NULL,
-  `discount_started` datetime(6) DEFAULT NULL,
-  `order_product_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`discount_id`),
-  UNIQUE KEY `UKhklrot93el6657iix7fciaw1` (`order_product_id`),
-  CONSTRAINT `FKftsl3goejw6nc88qury8jo1gk` FOREIGN KEY (`order_product_id`) REFERENCES `order_prod` (`order_product_id`)
+CREATE TABLE `manufacturers` (
+  `manufacturer_id` bigint NOT NULL AUTO_INCREMENT,
+  `manufacturer_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`manufacturer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `discounts`
+-- Dumping data for table `manufacturers`
 --
 
-LOCK TABLES `discounts` WRITE;
-/*!40000 ALTER TABLE `discounts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `discounts` ENABLE KEYS */;
+LOCK TABLES `manufacturers` WRITE;
+/*!40000 ALTER TABLE `manufacturers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `manufacturers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:19

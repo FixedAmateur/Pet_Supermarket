@@ -23,12 +23,12 @@ DROP TABLE IF EXISTS `prod_discount`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prod_discount` (
-  `discount_id` bigint NOT NULL,
   `product_id` bigint NOT NULL,
-  PRIMARY KEY (`discount_id`,`product_id`),
-  KEY `FKrrkdqyacwq121ov9nqfia0tuj` (`product_id`),
-  CONSTRAINT `FKdkp1xiwtylibp54tdgcwb2qxl` FOREIGN KEY (`discount_id`) REFERENCES `products` (`product_id`),
-  CONSTRAINT `FKrrkdqyacwq121ov9nqfia0tuj` FOREIGN KEY (`product_id`) REFERENCES `discounts` (`discount_id`)
+  `discount_id` bigint NOT NULL,
+  PRIMARY KEY (`product_id`,`discount_id`),
+  KEY `FKs3n8kris0cfxj6s2a0hojdweu` (`discount_id`),
+  CONSTRAINT `FK6ucwdnqv3dvdsgqrsxj3sfuft` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+  CONSTRAINT `FKs3n8kris0cfxj6s2a0hojdweu` FOREIGN KEY (`discount_id`) REFERENCES `discounts` (`discount_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:19

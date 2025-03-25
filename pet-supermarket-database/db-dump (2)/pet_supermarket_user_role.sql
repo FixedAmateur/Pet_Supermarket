@@ -16,33 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order_prod`
+-- Table structure for table `user_role`
 --
 
-DROP TABLE IF EXISTS `order_prod`;
+DROP TABLE IF EXISTS `user_role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order_prod` (
-  `order_product_id` bigint NOT NULL AUTO_INCREMENT,
-  `sub_price` double DEFAULT NULL,
-  `sub_quantity` bigint DEFAULT NULL,
-  `order_id` bigint DEFAULT NULL,
-  `product_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`order_product_id`),
-  UNIQUE KEY `UK633i9j9cl25n631plqdrp4asa` (`order_id`),
-  UNIQUE KEY `UKo5liqqwi9pwo3yx2vytykf9t4` (`product_id`),
-  CONSTRAINT `FKah65dfs8wt9mo1wowt4al4hs9` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  CONSTRAINT `FKmpi1dxshxcv6p9bfb1jhwkodw` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
+CREATE TABLE `user_role` (
+  `user_id` bigint NOT NULL,
+  `role_id` bigint NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `FKt7e7djp752sqn6w22i6ocqy6q` (`role_id`),
+  CONSTRAINT `FKj345gk1bovqvfame88rcx7yyx` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `FKt7e7djp752sqn6w22i6ocqy6q` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `order_prod`
+-- Dumping data for table `user_role`
 --
 
-LOCK TABLES `order_prod` WRITE;
-/*!40000 ALTER TABLE `order_prod` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_prod` ENABLE KEYS */;
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (1,2);
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:20

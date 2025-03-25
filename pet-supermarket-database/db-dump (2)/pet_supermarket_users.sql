@@ -34,7 +34,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`),
   UNIQUE KEY `UKjbhqfntldernk4cct06pd5sro` (`img_id`),
   CONSTRAINT `FKaqlt2jrfw7dvkb34rcr3s825j` FOREIGN KEY (`img_id`) REFERENCES `images` (`img_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'string','string','$2a$10$WwcDrnqF1bYc0cr.xQnGveltVCFUPsk/12rgsajQ9Ei.Y.e3ypY7K','string',4);
+INSERT INTO `users` VALUES (1,'string','string','$2a$10$ByIXK4naeZKzJp1ZkZ3N4.Gh7pAy5RV93e58CpmaYIWcGnaU88cxe','string',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:19

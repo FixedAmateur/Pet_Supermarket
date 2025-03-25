@@ -16,30 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_role`
+-- Table structure for table `discounts`
 --
 
-DROP TABLE IF EXISTS `user_role`;
+DROP TABLE IF EXISTS `discounts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_role` (
-  `user_id` bigint NOT NULL,
-  `role_id` bigint NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `FKt7e7djp752sqn6w22i6ocqy6q` (`role_id`),
-  CONSTRAINT `FKj345gk1bovqvfame88rcx7yyx` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `FKt7e7djp752sqn6w22i6ocqy6q` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`)
+CREATE TABLE `discounts` (
+  `discount_id` bigint NOT NULL AUTO_INCREMENT,
+  `discount_desc` varchar(255) DEFAULT NULL,
+  `discount_expiry` datetime(6) DEFAULT NULL,
+  `discount_minus` double DEFAULT NULL,
+  `discount_percentage` bigint DEFAULT NULL,
+  `discount_started` datetime(6) DEFAULT NULL,
+  `order_product_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`discount_id`),
+  UNIQUE KEY `UKhklrot93el6657iix7fciaw1` (`order_product_id`),
+  CONSTRAINT `FKftsl3goejw6nc88qury8jo1gk` FOREIGN KEY (`order_product_id`) REFERENCES `order_prod` (`order_product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_role`
+-- Dumping data for table `discounts`
 --
 
-LOCK TABLES `user_role` WRITE;
-/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,2);
-/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
+LOCK TABLES `discounts` WRITE;
+/*!40000 ALTER TABLE `discounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `discounts` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-25 19:48:25
+-- Dump completed on 2025-03-25 21:58:19
