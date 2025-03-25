@@ -8,9 +8,11 @@ import com.laborexport.pet_supermarket.model.dto.request.RegisterRequest;
 import com.laborexport.pet_supermarket.model.dto.response.JwtAuthResponse;
 import com.laborexport.pet_supermarket.model.dto.response.UserResponse;
 import com.laborexport.pet_supermarket.model.entity.Image;
+import com.laborexport.pet_supermarket.model.entity.Order;
 import com.laborexport.pet_supermarket.model.entity.Role;
 import com.laborexport.pet_supermarket.model.entity.User;
 import com.laborexport.pet_supermarket.repository.ImageRepository;
+import com.laborexport.pet_supermarket.repository.OrderRepository;
 import com.laborexport.pet_supermarket.repository.RoleRepository;
 import com.laborexport.pet_supermarket.repository.UserRepository;
 import com.laborexport.pet_supermarket.service.AuthenticationService;
@@ -24,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,7 +43,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
     @Autowired
     private final ImageRepository imageRepository;
-//    private final OrderRepository orderRepository;
+
+    @Autowired
+    private final OrderRepository orderRepository;
 
 
     @Override
@@ -102,23 +107,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         Set<Role> roles = new HashSet<>();
-        Role role = roleRepository.findByRoleName("ROLE_USER").orElseThrow(
-                ()->new ResourceNotFoundException("role", "role's name","ROLE_USER"));
+        Role role = roleRepository.findByRoleName("ROLE_CUSTOMER").orElseThrow(
+                ()->new ResourceNotFoundException("role", "role's name","ROLE_CUSTOMER"));
         roles.add(role);
         user.setRoles(roles);
 
         //set default avatar
         Image avatar = imageRepository.findById((long)1).orElseThrow(
                 () -> new ResourceNotFoundException("image", "image id", 1));
-
-
         user.setAvatar(avatar);
 
-        return modelMapper.map(userRepository.save(user), UserResponse.class);
+        //set default order for new user
+        Order order = new Order();
+        order.setUser(user);
+        order.setOrderUpdated(LocalDateTime.now());
+        orderRepository.save(order);
 
-//        Order order = new Order();
-//        order.setUser(user);
-//        orderRepository.save(order);
+
+        return modelMapper.map(userRepository.save(user), UserResponse.class);
 
     }
 }

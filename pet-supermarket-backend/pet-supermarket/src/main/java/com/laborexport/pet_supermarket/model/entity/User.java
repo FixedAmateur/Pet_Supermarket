@@ -19,6 +19,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     @Column(columnDefinition = "varchar(255) collate 'utf8_bin'",unique = true,nullable = false)
     private String username;
     @JsonIgnore
@@ -33,11 +34,24 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private Order order;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name = "img_id")
     private Image avatar;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "favorites",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @JsonIgnore
+    Set<Product> products = new HashSet<>();
+
 
 
     @Override

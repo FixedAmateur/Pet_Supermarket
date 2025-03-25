@@ -29,19 +29,6 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final UserRepository userRepository;
-
-
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .cors().and() // Enable CORS
-//                .csrf().disable() // Optionally disable CSRF for testing
-//                .authorizeRequests()
-//                .antMatchers("/customer-template/**").permitAll() // Permit static files
-//                .anyRequest().authenticated();
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,11 +40,50 @@ public class SecurityConfig {
                                 // Public endpoints
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/swagger-ui/index.html/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/users/{userId}").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/users/{userId}/**").hasAnyRole("CUSTOMER", "ADMIN")
 
-                                // User endpoints
+                                .requestMatchers(HttpMethod.POST, "/api/orders/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/orders/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/orders/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/orders/**").hasAnyRole("CUSTOMER", "ADMIN")
+
+                                .requestMatchers(HttpMethod.GET, "/api/order-products/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/order-products/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/order-products/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/order-products/**").hasAnyRole("CUSTOMER", "ADMIN")
+
+                                .requestMatchers(HttpMethod.GET, "/api/products/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/discounts/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/manufacturers/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/pets/**").hasAnyRole("CUSTOMER", "ADMIN")
+
+
+                                .requestMatchers(HttpMethod.PUT, "/api/users/{userId}").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "api/images/**").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/users/{userId}/update-avatar").hasAnyRole("CUSTOMER", "ADMIN")
+
 
                                 // Admin and Manager endpoints
+                                .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
+
+                                .requestMatchers(HttpMethod.POST, "/api/pets/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/pets/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/pets/**").hasRole("ADMIN")
+
+                                .requestMatchers(HttpMethod.POST, "/api/images/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/images/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/images/**").hasRole("ADMIN")
+
+                                .requestMatchers(HttpMethod.POST, "/api/manufacturers/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/manufacturers/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/manufacturers/**").hasRole("ADMIN")
+
+                                .requestMatchers(HttpMethod.POST, "/api/discounts/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/discounts/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/discounts/**").hasRole("ADMIN")
+
 
 
                                 // Default policy
@@ -66,20 +92,10 @@ public class SecurityConfig {
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-
-
         return http.build();
     }
 
 
-    @Bean
-    UserDetailsService userDetailsService(){
-        return username -> {
-            System.err.println(username);
-            return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        };
-    }
 
     @Bean
     public CorsFilter corsFilter() {
@@ -93,20 +109,6 @@ public class SecurityConfig {
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
 
-    @Bean
-    BCryptPasswordEncoder passwordEncoder (){
-        return new BCryptPasswordEncoder();
-    }
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
-        return configuration.getAuthenticationManager();
-    }
 
-    @Bean
-    AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
+
 }

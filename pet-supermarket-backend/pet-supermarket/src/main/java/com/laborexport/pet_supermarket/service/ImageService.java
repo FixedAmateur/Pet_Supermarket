@@ -2,6 +2,7 @@ package com.laborexport.pet_supermarket.service;
 
 import com.laborexport.pet_supermarket.model.dto.request.ImageRequest;
 import com.laborexport.pet_supermarket.model.dto.response.ImageResponse;
+import com.laborexport.pet_supermarket.model.dto.response.MessageResponse;
 
 import java.io.IOException;
 
@@ -12,5 +13,6 @@ public interface ImageService {
 
     public ImageResponse updateImageByImageId(Long id, ImageRequest request) throws IOException;
 
-    public String deleteImageByImageId(Long id);
+    public MessageResponse deleteImageByImageId(Long id);
+
 }
