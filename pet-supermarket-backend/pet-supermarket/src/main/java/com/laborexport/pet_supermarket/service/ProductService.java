@@ -24,4 +24,7 @@ public interface ProductService {
 
     MessageResponse deleteProductImageByProductIdAndImgId(Long productId, Long imgId);
 
+
+    ProductResponse addPetToProduct(Long petId, Long productId);
+
 }

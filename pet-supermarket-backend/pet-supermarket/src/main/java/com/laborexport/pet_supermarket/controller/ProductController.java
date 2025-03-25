@@ -90,6 +90,13 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "add pet to product")
+    @PutMapping("/{productId}/{petId}")
+    public ResponseEntity<ApiResponse> addProductPet(@PathVariable("productId") Long productId, @PathVariable("petId") Long petId) {
+        ApiResponse response = ApiResponse.succeed(productService.addPetToProduct(petId, productId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
 
 

@@ -2,6 +2,7 @@ package com.laborexport.pet_supermarket.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.*;
 
 import java.util.HashSet;
@@ -12,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pet_prod")
+@Table(name = "pets")
 @Builder()
 public class Pet {
     @Id
@@ -24,8 +25,8 @@ public class Pet {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "pet_prod",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "pet_id")
+            joinColumns = @JoinColumn(name = "pet_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     @JsonIgnore
     private Set<Product> products = new HashSet<>();

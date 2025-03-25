@@ -41,7 +41,7 @@ public class PetServiceImpl implements PetService {
     public PetResponse createPet(PetRequest request) {
         Pet pet = mapper.map(request, Pet.class);
         Image defaultPetImage = mapper.map(imageService.getImageByImageId(ImageConstants.DEFAULT_PET_IMAGE_ID), Image.class);
-
+        Image petImage = new Image(); defaultPetImage.setImgId(petImage.getImgId());
         Set<Image> petImages = new HashSet<>();
         petImages.add(defaultPetImage);
         pet.setPetImages(petImages);

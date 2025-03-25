@@ -14,6 +14,7 @@ import com.laborexport.pet_supermarket.model.entity.Image;
 import com.laborexport.pet_supermarket.model.entity.Pet;
 import com.laborexport.pet_supermarket.model.entity.Product;
 import com.laborexport.pet_supermarket.repository.ImageRepository;
+import com.laborexport.pet_supermarket.repository.PetRepository;
 import com.laborexport.pet_supermarket.repository.ProductRepository;
 import com.laborexport.pet_supermarket.service.ImageService;
 import com.laborexport.pet_supermarket.service.ProductService;
@@ -38,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private final ImageService imageService;
-
+    private final PetRepository petRepository;
 
     private final ImageRepository imageRepository;
     private final ModelMapper mapper;
@@ -132,5 +133,16 @@ public class ProductServiceImpl implements ProductService {
         imageService.deleteImageByImageId(imgId);
         return new MessageResponse(String.format("Product with the product id %s has its pet image with the id %s deleted successfully.", productId, imgId));
 
+    }
+
+    @Override
+    public ProductResponse addPetToProduct(Long petId, Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("product id", "product", productId));
+        Pet pet = petRepository.findById(petId).orElseThrow(() -> new ResourceNotFoundException("pet id", "pet", petId));
+        Set<Pet> pets = product.getPets();
+        pets.add(pet);
+
+
+        return mapper.map(productRepository.save(product), ProductResponse.class);
     }
 }
