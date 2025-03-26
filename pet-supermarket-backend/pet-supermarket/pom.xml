@@ -11,6 +11,7 @@
 	<groupId>com.laborexport</groupId>
 	<artifactId>pet-supermarket</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>pet-supermarket</name>
 	<description>Pet food commercial website for Cambodia Labor Export Co.</description>
 	<url/>
