@@ -3,6 +3,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/pet_supermarket-0.0.1-SNAPSHOT.jar pet_supermarket.jar
+COPY --from=build /target/classes/com/laborexport/pet_supermarket/PetSupermarketApplication.class pet_supermarket.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar","pet_supermarket.jar"]
