@@ -13,9 +13,11 @@ import com.laborexport.pet_supermarket.model.dto.response.ProductResponse;
 import com.laborexport.pet_supermarket.model.entity.Image;
 import com.laborexport.pet_supermarket.model.entity.Pet;
 import com.laborexport.pet_supermarket.model.entity.Product;
+import com.laborexport.pet_supermarket.model.entity.User;
 import com.laborexport.pet_supermarket.repository.ImageRepository;
 import com.laborexport.pet_supermarket.repository.PetRepository;
 import com.laborexport.pet_supermarket.repository.ProductRepository;
+import com.laborexport.pet_supermarket.repository.UserRepository;
 import com.laborexport.pet_supermarket.service.ImageService;
 import com.laborexport.pet_supermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private final ImageService imageService;
     private final PetRepository petRepository;
-
+    private final UserRepository userRepository;
     private final ImageRepository imageRepository;
     private final ModelMapper mapper;
 
@@ -144,5 +146,52 @@ public class ProductServiceImpl implements ProductService {
 
 
         return mapper.map(productRepository.save(product), ProductResponse.class);
+    }
+
+    @Override
+    public CustomPage<ProductResponse> getFavoritesProductByUserId(Long userId, Pageable pageable) {
+        Page<Product> products = productRepository.findAllByUserId(userId, pageable);
+
+
+        return CustomPage.<ProductResponse>builder()
+                .pageNo(products.getNumber() + 1)
+                .pageSize(products.getSize())
+                .totalPages(products.getTotalPages())
+                .pageContent(products.getContent().stream()
+                        .map(product -> mapper.map(product, ProductResponse.class))
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    @Override
+    public MessageResponse addProductToFavorites(Long userId, Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("product id", "product", productId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        Set<Product> products = user.getProducts();
+        if (products.contains(product))
+            throw new AppException(ErrorCode.CANNOT_ADD_PRODUCT_INTO_FAVORITES) ;
+
+        products.add(product);
+        user.setProducts(products);
+
+        userRepository.save(user);
+
+        return new MessageResponse(String.format("user with the id %s has had his favorites added the product with the id %s.", userId, productId));
+    }
+
+    @Override
+    public MessageResponse removeProductFromFavorite(Long userId, Long productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("product id", "product", productId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        Set<Product> products = user.getProducts();
+        if (!products.contains(product))
+            throw new AppException(ErrorCode.CANNOT_REMOVE_PRODUCT_FROM_FAVORITES) ;
+
+        products.remove(product);
+        user.setProducts(products);
+
+        userRepository.save(user);
+
+        return new MessageResponse(String.format("user with the id %s has had his favorites removed the product with the id %s.", userId, productId));
     }
 }

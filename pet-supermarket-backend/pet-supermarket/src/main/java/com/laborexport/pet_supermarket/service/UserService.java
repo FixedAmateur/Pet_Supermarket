@@ -19,4 +19,6 @@ public interface UserService {
     UserResponse updateAvatarByUserId(Long id, ImageRequest request) throws IOException;
 
     MessageResponse updatePasswordByUserId(Long id, String updatedPassword);
+
+
 }

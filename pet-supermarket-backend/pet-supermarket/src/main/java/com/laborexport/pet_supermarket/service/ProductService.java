@@ -27,4 +27,9 @@ public interface ProductService {
 
     ProductResponse addPetToProduct(Long petId, Long productId);
 
+    CustomPage<ProductResponse> getFavoritesProductByUserId(Long userId, Pageable pageable);
+
+    MessageResponse addProductToFavorites(Long userId, Long productId);
+
+    MessageResponse removeProductFromFavorite(Long userId, Long productId);
 }

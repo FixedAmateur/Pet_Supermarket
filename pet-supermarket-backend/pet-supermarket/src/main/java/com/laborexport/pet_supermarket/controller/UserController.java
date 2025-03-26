@@ -3,6 +3,7 @@ package com.laborexport.pet_supermarket.controller;
 import com.laborexport.pet_supermarket.model.dto.request.ImageRequest;
 import com.laborexport.pet_supermarket.model.dto.request.UserRequest;
 import com.laborexport.pet_supermarket.model.dto.response.ApiResponse;
+import com.laborexport.pet_supermarket.service.ProductService;
 import com.laborexport.pet_supermarket.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,6 +29,8 @@ public class UserController {
 
     private final UserService userService;
     //private final OrderService orderService;
+
+    private final ProductService productService;
 
     @Operation(summary = "Get All User", description = "Get All User API")
     @SecurityRequirement(name = "bearerAuth")
@@ -81,6 +84,38 @@ public class UserController {
     public ResponseEntity<ApiResponse> updateUserPassword(@PathVariable("userId") Long userId,
                                                         @RequestParam @Valid String request) {
         ApiResponse apiResponse = ApiResponse.succeed(userService.updatePasswordByUserId(userId, request));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+
+    @Operation(summary = "Get User Favorite Products")
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/{userId}/favorites")
+    public ResponseEntity<ApiResponse> updateUser(
+            @PathVariable("userId") Long userId,
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "productName", required = false) String sortBy){
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, Sort.by(sortBy).ascending());
+        ApiResponse apiResponse = ApiResponse.succeed(productService.getFavoritesProductByUserId(userId, pageable));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Add Product to User Favorites")
+    @PutMapping("/{userId}/favorites/add/{productId}")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<ApiResponse> addProductToUserFavorites(@PathVariable("userId") Long userId,
+                                                          @PathVariable("productId") Long productId) {
+        ApiResponse apiResponse = ApiResponse.succeed(productService.addProductToFavorites(userId, productId));
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Remove Product from User Favorites", description = "Update User Password By Id API")
+    @PutMapping("/{userId}/favorites/remove/{productId}")
+    @SecurityRequirement(name = "bearerAuth")
+    public ResponseEntity<ApiResponse> removeProductFromUserFavorites(@PathVariable("userId") Long userId,
+                                                          @PathVariable("productId") Long productId) {
+        ApiResponse apiResponse = ApiResponse.succeed(productService.removeProductFromFavorite(userId, productId));
         return new ResponseEntity<>(apiResponse, HttpStatus.OK);
     }
 

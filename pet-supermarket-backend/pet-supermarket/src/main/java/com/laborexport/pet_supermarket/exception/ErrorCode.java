@@ -28,6 +28,10 @@ public enum ErrorCode {
     INVALID_NUMBER_OF_CARTS(400, "Only 1 cart per person allowed", HttpStatus.BAD_REQUEST),
     INVALID_NUMBER_OF_CART_PRODUCTS(400, "Only 1 product id per person within his cart allowed", HttpStatus.BAD_REQUEST),
 
+
+    CANNOT_ADD_PRODUCT_INTO_FAVORITES(400, "product is already contained in user's favorites", HttpStatus.BAD_REQUEST),
+    CANNOT_REMOVE_PRODUCT_FROM_FAVORITES(400, "product which has not been added to favorite cannot be deleted", HttpStatus.BAD_REQUEST),
+
     NOT_EXIST_ANY_IMAGE_WITHIN_PET(404, "Pet doesn't have any image with the given image id", HttpStatus.NOT_FOUND),
     CANNOT_REMOVE_DEFAULT_IMAGE(400, "cannot remove default image", HttpStatus.BAD_REQUEST)
 

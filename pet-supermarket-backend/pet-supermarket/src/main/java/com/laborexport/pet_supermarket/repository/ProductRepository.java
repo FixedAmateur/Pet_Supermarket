@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     boolean existsByProductNameAndProductType(String productName, String productType);
 
-
-
+    @Query("SELECT p FROM Product p JOIN p.users u WHERE u.id = :userId")
+    Page<Product> findAllByUserId(Long userId, Pageable pageable);
 
 }

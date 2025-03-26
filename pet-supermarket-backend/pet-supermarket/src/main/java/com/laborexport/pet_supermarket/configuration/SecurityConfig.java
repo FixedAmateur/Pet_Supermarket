@@ -58,7 +58,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/pets/**").hasAnyRole("CUSTOMER", "ADMIN")
 
 
-                                .requestMatchers(HttpMethod.PUT, "/api/users/{userId}").hasAnyRole("CUSTOMER", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/users/{userId}/**").hasAnyRole("CUSTOMER", "ADMIN")
                                 .requestMatchers(HttpMethod.POST, "api/images/**").hasAnyRole("CUSTOMER", "ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/api/users/{userId}/update-avatar").hasAnyRole("CUSTOMER", "ADMIN")
 
