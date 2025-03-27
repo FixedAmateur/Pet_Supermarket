@@ -1,0 +1,36 @@
+app:
+  jwt-secret: $[JWT_SECRET:d23507c6beedda00c5c65a1f0edfafea5adbbcbaa3a6225213542cfb16a914f6]
+  jwt-expiration-milliseconds: $[JWT_EXPIRATION:3600000]
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: 'true'
+        show_sql: 'true'
+    hibernate:
+      ddl-auto: update
+  application:
+    name: pet-supermarket
+  datasource:
+    password: $[DATABASE_PASSWORD:12345678]
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: $[DATABASE_USER:root]
+    url: jdbc:mysql://$[DATABASE_HOST:localhost]:[DATABASE_PORT:3306]/$[DATABASE_NAME:pet_supermarket]?createDatabaseIfNotExist=true
+logging:
+  level:
+    com:
+      cloudinary: DEBUG
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        SQL: DEBUG
+      springframework:
+        transaction: DEBUG
+        jdbc:
+          core: DEBUG
+        orm:
+          jpa: DEBUG
